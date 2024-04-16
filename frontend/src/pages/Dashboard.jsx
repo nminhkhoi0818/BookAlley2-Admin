@@ -119,23 +119,23 @@ export default function Dashboard() {
 
   const productColumns = [
     {
-      title: "Product Name",
-      dataIndex: "productName",
+      title: 'Product Name',
+      dataIndex: 'name'
     },
 
     {
-      title: "Price",
-      dataIndex: "price",
+      title: 'Price',
+      dataIndex: 'price'
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      render: (status) => {
-        let color = status === "available" ? "green" : "volcano";
+      title: 'Stock',
+      dataIndex: 'instock',
+      render: (instock) => {
+        let color = instock != 0 ? 'green' : 'volcano';
 
-        return <Tag color={color}>{status.toUpperCase()}</Tag>;
-      },
-    },
+        return <Tag color={color}>{instock}</Tag>;
+      }
+    }
   ];
 
   return (
@@ -274,7 +274,7 @@ export default function Dashboard() {
                 Recent Products
               </h3>
             </div>
-            <RecentTable entity={"product"} dataTableColumns={productColumns} />
+            <RecentTable entity={"book"} dataTableColumns={productColumns} />
           </div>
         </Col>
       </Row>
