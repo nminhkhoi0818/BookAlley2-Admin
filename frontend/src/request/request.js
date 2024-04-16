@@ -4,7 +4,7 @@ import { token as tokenCookies } from "@/auth";
 import errorHandler from "./errorHandler";
 import successHandler from "./successHandler";
 
-const headersInstance = { [ACCESS_TOKEN_NAME]: tokenCookies.get() };
+const headersInstance = { [ACCESS_TOKEN_NAME]: `Bearer ${tokenCookies.get()}` };
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -83,7 +83,7 @@ const request = {
 
   search: async (entity, source, option = {}) => {
     axiosInstance.defaults.headers = {
-      [ACCESS_TOKEN_NAME]: tokenCookies.get(),
+      [ACCESS_TOKEN_NAME]: `Bearer ${tokenCookies.get()}`
     };
     try {
       let query = "";
@@ -105,9 +105,9 @@ const request = {
 
   list: async (entity, option = {}) => {
     axiosInstance.defaults.headers = {
-      [ACCESS_TOKEN_NAME]: tokenCookies.get(),
+      [ACCESS_TOKEN_NAME]: `Bearer ${tokenCookies.get()}`,
     };
-    console.log(tokenCookies.get());
+    // console.log(tokenCookies.get());
     try {
       let query = "";
       if (option !== {}) {
