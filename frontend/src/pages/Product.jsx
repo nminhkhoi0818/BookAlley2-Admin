@@ -2,6 +2,7 @@ import React from "react";
 
 import CrudModule from "@/modules/CrudModule";
 import ProductForm from "@/forms/ProductForm";
+import { Tag } from 'antd';
 
 function Product() {
   const entity = "book";
@@ -47,8 +48,13 @@ function Product() {
       dataIndex: 'price'
     },
     {
-      title: 'status',
-      dataIndex: 'instock'
+      title: 'In stock',
+      dataIndex: 'instock',
+      render: (instock) => {
+        let color = instock != 0 ? 'green' : 'volcano';
+
+        return <Tag color={color}>{instock}</Tag>;
+      }
     }
   ];
 
@@ -73,7 +79,7 @@ function Product() {
   };
   return (
     <CrudModule
-      createForm={<ProductForm />}
+      // createForm={<ProductForm />}
       updateForm={<ProductForm isUpdateForm={true} />}
       config={config}
     />

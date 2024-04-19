@@ -40,12 +40,12 @@ function Navigation() {
           <Menu.Item key="2" icon={<CustomerServiceOutlined />}>
             <Link to="/customer">Customer</Link>
           </Menu.Item>
-          <Menu.Item key="24" icon={<UserOutlined />}>
+          {/* <Menu.Item key="24" icon={<UserOutlined />}>
             <Link to="/selectcustomer">Custom Select Customer</Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="21" icon={<FileTextOutlined />}>
-            <Link to="/lead" />
-            Lead
+            <Link to="/order" />
+            Order
           </Menu.Item>
           <Menu.Item key="3" icon={<FileSyncOutlined />}>
             <Link to="/product" />

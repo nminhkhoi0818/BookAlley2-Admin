@@ -8,7 +8,7 @@ import { selectListItems } from "@/redux/crud/selectors";
 
 import uniqueId from "@/utils/uinqueId";
 
-export default function DataTable({ config, DropDownRowMenu, AddNewItem }) {
+export default function DataTable({ config, DropDownRowMenu }) {
   let { entity, dataTableColumns, dataTableTitle } = config;
   dataTableColumns = [
     ...dataTableColumns,
@@ -48,7 +48,7 @@ export default function DataTable({ config, DropDownRowMenu, AddNewItem }) {
           <Button onClick={handelDataTableLoad} key={`${uniqueId()}`}>
             Refresh
           </Button>,
-          <AddNewItem key={`${uniqueId()}`} config={config} />,
+          // <AddNewItem key={`${uniqueId()}`} config={config} />,
         ]}
         style={{
           padding: "20px 0px",

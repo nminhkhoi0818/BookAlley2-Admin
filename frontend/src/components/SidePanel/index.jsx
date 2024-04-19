@@ -67,7 +67,7 @@ export default function SidePanel({
         isCollapsed={isBoxCollapsed}
         onCollapse={collapsePanelBox}
         topContent={topContent}
-        bottomContent={bottomContent}
+        // bottomContent={bottomContent}
       ></CollapseBox>
     </Sider>
   );

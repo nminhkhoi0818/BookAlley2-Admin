@@ -69,7 +69,7 @@ export default function CrudDataTable({ config }) {
     <DataTable
       config={config}
       DropDownRowMenu={DropDownRowMenu}
-      AddNewItem={AddNewItem}
+      // AddNewItem={AddNewItem}
     />
   );
 }
