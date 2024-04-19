@@ -2,75 +2,78 @@ import React from "react";
 
 import CrudModule from "@/modules/CrudModule";
 import LeadForm from "@/forms/LeadForm";
-
-function Lead() {
-  const entity = "lead";
+import { Tag } from 'antd';
+function Order() {
+  const entity = "order";
   const searchConfig = {
-    displayLabels: ["client"],
-    searchFields: "client,email,phone",
-    outputValue: "_id",
+    displayLabels: ['client'],
+    searchFields: 'username,email',
+    outputValue: '_id'
   };
 
-  const panelTitle = "Lead Panel";
-  const dataTableTitle = "Leads Lists";
-  const entityDisplayLabels = ["client"];
+  const panelTitle = "Order Panel";
+  const dataTableTitle = "Orders Lists";
+  const entityDisplayLabels = ["_id"];
 
   const readColumns = [
     {
-      title: "Date",
-      dataIndex: "date",
+      title: 'Email',
+      dataIndex: 'owner.email'
     },
     {
-      title: "Client",
-      dataIndex: "client",
+      title: 'Username',
+      dataIndex: 'owner.username'
     },
     {
-      title: "phone",
-      dataIndex: "phone",
+      title: 'Shipping Method',
+      dataIndex: 'shipping_method'
     },
     {
-      title: "email",
-      dataIndex: "email",
-    },
-
-    {
-      title: "Budget",
-      dataIndex: "budget",
+      title: 'Payment Method',
+      dataIndex: 'payment_method'
     },
     {
-      title: "Status",
-      dataIndex: "status",
-    },
-    {
-      title: "Request",
-      dataIndex: "request",
-    },
+      title: 'Total',
+      dataIndex: 'total'
+    }
   ];
   const dataTableColumns = [
     {
-      title: "Date",
-      dataIndex: "date",
+      title: 'Email',
+      dataIndex: ['owner', 'email']
     },
     {
-      title: "Client",
-      dataIndex: "client",
+      title: 'Username',
+      dataIndex: ['owner', 'username']
     },
     {
-      title: "phone",
-      dataIndex: "phone",
+      title: 'Total',
+      dataIndex: 'total'
     },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      render: (status) => {
+        let color = 'orange';
+        if (status === 'delivering') {
+          color = 'cyan';
+        } else if (status === 'completed') {
+          color = 'green';
+        } else if (status === 'canceled') {
+          color = 'red';
+        }
+        // let color = status === 'pending' ? 'volcano' : 'green';
 
-    {
-      title: "Budget",
-      dataIndex: "budget",
-    },
+        return <Tag color={color}>{status.toUpperCase()}</Tag>;
+      }
+    }
   ];
 
   const ADD_NEW_ENTITY = "Add new lead";
-  const DATATABLE_TITLE = "leads List";
-  const ENTITY_NAME = "lead";
+  const DATATABLE_TITLE = "orders List";
+  const ENTITY_NAME = "order";
   const CREATE_ENTITY = "Create lead";
-  const UPDATE_ENTITY = "Update lead";
+  const UPDATE_ENTITY = "Update order";
   const config = {
     entity,
     panelTitle,
@@ -94,4 +97,4 @@ function Lead() {
   );
 }
 
-export default Lead;
+export default Order;
