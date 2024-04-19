@@ -2,50 +2,60 @@ import React from "react";
 
 import CrudModule from "@/modules/CrudModule";
 import ProductForm from "@/forms/ProductForm";
+import { Tag } from 'antd';
 
 function Product() {
-  const entity = "product";
+  const entity = "book";
   const searchConfig = {
-    displayLabels: ["productName"],
-    searchFields: "productName",
-    outputValue: "_id",
+    displayLabels: ['name'],
+    searchFields: 'name',
+    outputValue: '_id'
   };
 
   const panelTitle = "Product Panel";
   const dataTableTitle = "Products Lists";
-  const entityDisplayLabels = ["productName"];
+  const entityDisplayLabels = ['name'];
 
   const readColumns = [
     {
-      title: "Product Name",
-      dataIndex: "productName",
+      title: 'Product Name',
+      dataIndex: 'name'
     },
     {
-      title: "Description",
-      dataIndex: "description",
+      title: 'Description',
+      dataIndex: 'description'
     },
     {
-      title: "Price",
-      dataIndex: "price",
-    },
+      title: 'Price',
+      dataIndex: 'price'
+    }
   ];
   const dataTableColumns = [
     {
-      title: "Product Name",
-      dataIndex: "productName",
+      title: 'Product Name',
+      dataIndex: 'name',
+      width: 260,
+      ellipsis: true
     },
     {
-      title: "Description",
-      dataIndex: "description",
+      title: 'Description',
+      dataIndex: 'description',
+      width: 320,
+      ellipsis: true
     },
     {
-      title: "Price",
-      dataIndex: "price",
+      title: 'Price',
+      dataIndex: 'price'
     },
     {
-      title: "status",
-      dataIndex: "status",
-    },
+      title: 'In stock',
+      dataIndex: 'instock',
+      render: (instock) => {
+        let color = instock != 0 ? 'green' : 'volcano';
+
+        return <Tag color={color}>{instock}</Tag>;
+      }
+    }
   ];
 
   const ADD_NEW_ENTITY = "Add new product";
@@ -69,7 +79,7 @@ function Product() {
   };
   return (
     <CrudModule
-      createForm={<ProductForm />}
+      // createForm={<ProductForm />}
       updateForm={<ProductForm isUpdateForm={true} />}
       config={config}
     />

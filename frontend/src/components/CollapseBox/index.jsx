@@ -56,11 +56,11 @@ export default function CollapseBox({
     >
       <TopCollapseBox isOpen={isCollapsed}>{topContent}</TopCollapseBox>
       <div className={"collapseBox " + collapsed}>
-        <CollapseBoxButton title={buttonTitle} onChange={onCollapse} />
-        <div className="whiteBg"></div>
-        <BottomCollapseBox isOpen={isCollapsed}>
+        {/* <CollapseBoxButton title={buttonTitle} onChange={onCollapse} /> */}
+        {/* <div className="whiteBg"></div> */}
+        {/* <BottomCollapseBox isOpen={isCollapsed}>
           {bottomContent}
-        </BottomCollapseBox>
+        </BottomCollapseBox> */}
       </div>
     </div>
   );

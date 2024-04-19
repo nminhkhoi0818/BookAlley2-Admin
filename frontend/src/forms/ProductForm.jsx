@@ -6,7 +6,7 @@ export default function ProductForm({ isUpdateForm = false }) {
     <>
       <Form.Item
         label="Product Name"
-        name="productName"
+        name="name"
         rules={[
           {
             required: true,

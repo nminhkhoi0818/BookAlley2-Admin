@@ -45,13 +45,13 @@ function FixHeaderPanel({ config }) {
         <Col className="gutter-row" span={21}>
           <SearchItem config={config} />
         </Col>
-        <Col className="gutter-row" span={3}>
+        {/* <Col className="gutter-row" span={3}>
           <Button
             onClick={addNewItem}
             block={true}
             icon={<PlusOutlined />}
           ></Button>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );
@@ -68,9 +68,9 @@ export default function CrudModule({ config, createForm, updateForm }) {
     <CrudLayout
       config={config}
       fixHeaderPanel={<FixHeaderPanel config={config} />}
-      sidePanelBottomContent={
-        <CreateForm config={config} formElements={createForm} />
-      }
+      // sidePanelBottomContent={
+      //   <CreateForm config={config} formElements={createForm} />
+      // }
       sidePanelTopContent={
         <SidePanelTopContent config={config} formElements={updateForm} />
       }
