@@ -34,14 +34,14 @@ export default function RecentTable({ ...props }) {
   let { entity, dataTableColumns } = props;
   dataTableColumns = [
     ...dataTableColumns,
-    {
-      title: "",
-      render: (row) => (
-        <Dropdown overlay={DropDownRowMenu({ row })} trigger={["click"]}>
-          <EllipsisOutlined style={{ cursor: "pointer", fontSize: "24px" }} />
-        </Dropdown>
-      ),
-    },
+    // {
+    //   title: "",
+    //   render: (row) => (
+    //     <Dropdown overlay={DropDownRowMenu({ row })} trigger={["click"]}>
+    //       <EllipsisOutlined style={{ cursor: "pointer", fontSize: "24px" }} />
+    //     </Dropdown>
+    //   ),
+    // },
   ];
 
   const asyncList = () => {

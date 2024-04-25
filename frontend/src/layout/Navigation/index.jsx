@@ -51,15 +51,15 @@ function Navigation() {
             <Link to="/product" />
             Product
           </Menu.Item>
-          <Menu.Item key="31" icon={<TeamOutlined />}>
+          {/* <Menu.Item key="31" icon={<TeamOutlined />}>
             <Link to="/admin" />
             Admins Management
-          </Menu.Item>
+          </Menu.Item> */}
 
-          <Menu.Item key="32" icon={<SettingOutlined />}>
+          {/* <Menu.Item key="32" icon={<SettingOutlined />}>
             <Link to="/settings" />
             Settings
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Sider>
     </>
