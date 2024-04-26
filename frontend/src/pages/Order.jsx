@@ -63,8 +63,8 @@ function Order() {
           color = 'red';
         }
         // let color = status === 'pending' ? 'volcano' : 'green';
-
-        return <Tag color={color}>{status.toUpperCase()}</Tag>;
+        if (status) return <Tag color={color}>{status.toUpperCase()}</Tag>;
+        return <Tag color={color}>{}</Tag>
       }
     }
   ];

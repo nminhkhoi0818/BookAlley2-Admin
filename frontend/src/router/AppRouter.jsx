@@ -12,8 +12,8 @@ const Dashboard = lazy(() =>
 //   import(/*webpackChunkName:'AdminPage'*/ "@/pages/Admin")
 // );
 
-const Customer = lazy(() =>
-  import(/*webpackChunkName:'CustomerPage'*/ "@/pages/Customer")
+const User = lazy(() =>
+  import(/*webpackChunkName:'CustomerPage'*/ "@/pages/User")
 );
 
 // const SelectCustomer = lazy(() =>
@@ -39,7 +39,7 @@ export default function AppRouter() {
       <AnimatePresence exitBeforeEnter initial={false}>
         <Switch location={location} key={location.pathname}>
           <PrivateRoute path="/" component={Dashboard} exact />
-          <PrivateRoute component={Customer} path="/customer" exact />
+          <PrivateRoute component={User} path="/user" exact />
           {/* <PrivateRoute
             component={SelectCustomer}
             path="/selectcustomer"
