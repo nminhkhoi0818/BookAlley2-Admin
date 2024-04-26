@@ -5,60 +5,13 @@ export default function CustomerForm({ isUpdateForm = false }) {
   return (
     <>
       <Form.Item
-        label="company Name"
-        name="company"
+        label="Username"
+        name="username"
         rules={[
           {
             required: true,
-            message: "Please input your company name!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Surname"
-        name="surname"
-        rules={[
-          {
-            required: true,
-            message: "Please input your surname!",
-          },
-        ]}
-        style={{
-          display: "inline-block",
-          width: "calc(50%)",
-          paddingRight: "5px",
-        }}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="Name"
-        name="name"
-        rules={[
-          {
-            required: true,
-            message: "Please input your manager name!",
-          },
-        ]}
-        style={{
-          display: "inline-block",
-          width: "calc(50%)",
-          paddingLeft: "5px",
-        }}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="phone"
-        label="Phone"
-        rules={[
-          {
-            required: true,
-            message: "Please input your phone!",
-          },
+            message: 'Please input username!'
+          }
         ]}
       >
         <Input />
@@ -68,13 +21,26 @@ export default function CustomerForm({ isUpdateForm = false }) {
         label="E-mail"
         rules={[
           {
-            type: "email",
-            message: "The input is not valid E-mail!",
+            type: 'email',
+            message: 'The input is not valid E-mail!'
           },
           {
             required: true,
-            message: "Please input your E-mail!",
-          },
+            message: 'Please input your E-mail!'
+          }
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="role"
+        label="Role"
+        rules={[
+          {
+            required: true,
+            message: 'Please input role!'
+          }
         ]}
       >
         <Input />

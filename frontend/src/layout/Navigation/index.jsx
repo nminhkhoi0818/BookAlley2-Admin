@@ -38,11 +38,8 @@ function Navigation() {
             Home Page
           </Menu.Item>
           <Menu.Item key="2" icon={<CustomerServiceOutlined />}>
-            <Link to="/customer">Customer</Link>
+            <Link to="/user">Users</Link>
           </Menu.Item>
-          {/* <Menu.Item key="24" icon={<UserOutlined />}>
-            <Link to="/selectcustomer">Custom Select Customer</Link>
-          </Menu.Item> */}
           <Menu.Item key="21" icon={<FileTextOutlined />}>
             <Link to="/order" />
             Order
