@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Image } from "antd";
 import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import {
@@ -31,7 +31,11 @@ function Navigation() {
           zIndex: 1000,
         }}
       >
-        <div className="logo" />
+        <div
+          style={{ display: "flex", justifyContent: "center", padding: "20px" }}
+        >
+          <img src="Logo.png" />
+        </div>
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1" icon={<DashboardOutlined />}>
             <Link to="/" />

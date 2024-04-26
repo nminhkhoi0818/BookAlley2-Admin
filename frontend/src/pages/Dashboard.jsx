@@ -1,12 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Input, InputNumber, Space, Divider, Row, Col } from "antd";
 
 import { Layout, Breadcrumb, Statistic, Progress, Tag } from "antd";
 
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
-
+import axios from "axios";
 import { DashboardLayout } from "@/layout";
 import RecentTable from "@/components/RecentTable";
+import { ACCESS_TOKEN_NAME, API_BASE_URL } from "@/config/serverApiConfig";
+import { token as tokenCookies } from "@/auth";
 
 const TopCard = ({ title, tagContent, tagColor, prefix }) => {
   return (
@@ -97,141 +99,205 @@ const PreviewState = ({ tag, color, value }) => {
   );
 };
 export default function Dashboard() {
+  const [statisticData, setStatisticData] = useState({});
+  const headersInstance = {
+    [ACCESS_TOKEN_NAME]: `Bearer ${tokenCookies.get()}`,
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(API_BASE_URL + "order/statistic", {
+        headers: headersInstance,
+      });
+      setStatisticData(response.data);
+      console.log(response.data);
+    };
+    fetchData();
+  }, []);
+
   const orderColumns = [
     {
-      title: 'Client',
-      dataIndex: ['owner', 'email'],
+      title: "Client",
+      dataIndex: ["owner", "email"],
     },
     {
-      title: 'Total',
-      dataIndex: 'total'
+      title: "Total",
+      dataIndex: "total",
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
+      title: "Status",
+      dataIndex: "status",
       render: (status) => {
-        let color = 'orange';
-        if (status === 'delivering') {
-          color = 'cyan'
-        } else if (status === 'completed') {
-          color = 'green'
-        } else if (status === 'canceled') {
-          color = 'red';
+        let color = "orange";
+        if (status === "delivering") {
+          color = "cyan";
+        } else if (status === "completed") {
+          color = "green";
+        } else if (status === "canceled") {
+          color = "red";
         }
         // let color = status === 'pending' ? 'volcano' : 'green';
 
         return <Tag color={color}>{status.toUpperCase()}</Tag>;
-      }
-    }
+      },
+    },
   ];
 
   const productColumns = [
     {
-      title: 'Product Name',
-      dataIndex: 'name',
+      title: "Product Name",
+      dataIndex: "name",
       width: 260,
-      ellipsis: true
+      ellipsis: true,
     },
 
     {
-      title: 'Price',
-      dataIndex: 'price'
+      title: "Price",
+      dataIndex: "price",
     },
     {
-      title: 'Stock',
-      dataIndex: 'instock',
+      title: "Stock",
+      dataIndex: "instock",
       render: (instock) => {
-        let color = instock != 0 ? 'green' : 'volcano';
+        let color = instock != 0 ? "green" : "volcano";
 
         return <Tag color={color}>{instock}</Tag>;
-      }
-    }
+      },
+    },
   ];
 
   return (
     <DashboardLayout>
-      <Row gutter={[24, 24]}>
+      <Row
+        gutter={[24, 24]}
+        style={{ display: "flex", justifyContent: "space-around" }}
+      >
         <TopCard
-          title={'Leads'}
-          tagColor={'cyan'}
-          prefix={'This month'}
-          tagContent={'34 000 $'}
+          title={"Order"}
+          tagColor={"purple"}
+          prefix={"This month"}
+          tagContent={statisticData.orderCount}
         />
         <TopCard
-          title={'Order'}
-          tagColor={'purple'}
-          prefix={'This month'}
-          tagContent={'34 000 $'}
-        />
-        <TopCard
-          title={'Payment'}
-          tagColor={'green'}
-          prefix={'This month'}
-          tagContent={'34 000 $'}
-        />
-        <TopCard
-          title={'Due Balance'}
-          tagColor={'red'}
-          prefix={'Not Paid'}
-          tagContent={'34 000 $'}
+          title={"Payment"}
+          tagColor={"green"}
+          prefix={"This month"}
+          tagContent={`${statisticData.totalPayment} VND`}
         />
       </Row>
       <div className="space30"></div>
       <Row gutter={[24, 24]}>
         <Col className="gutter-row" span={18}>
-          <div className="whiteBox shadow" style={{ height: '380px' }}>
+          <div className="whiteBox shadow" style={{ height: "280px" }}>
             <Row className="pad10" gutter={[0, 0]}>
               <Col className="gutter-row" span={8}>
+                {" "}
                 <div className="pad15">
-                  <h3 style={{ color: '#22075e', marginBottom: 15 }}>
-                    Lead Preview
+                  <h3 style={{ color: "#22075e", marginBottom: 15 }}>
+                    Order Status
                   </h3>
-                  <PreviewState tag={'Draft'} color={'grey'} value={3} />
-                  <PreviewState tag={'Pending'} color={'bleu'} value={5} />
-                  <PreviewState tag={'Not Paid'} color={'orange'} value={12} />
-                  <PreviewState tag={'Overdue'} color={'red'} value={6} />
-                  <PreviewState
-                    tag={'Partially Paid'}
-                    color={'cyan'}
-                    value={8}
-                  />
-                  <PreviewState tag={'Paid'} color={'green'} value={55} />
+                  {statisticData.groupByStatus && (
+                    <>
+                      <PreviewState
+                        tag={"Pending"}
+                        color={"bleu"}
+                        value={statisticData.groupByStatus.pending}
+                      />
+                      <PreviewState
+                        tag={"Delivering"}
+                        color={"orange"}
+                        value={statisticData.groupByStatus.delivering}
+                      />
+                      <PreviewState
+                        tag={"Completed"}
+                        color={"red"}
+                        value={statisticData.groupByStatus.completed}
+                      />
+                      <PreviewState
+                        tag={"Canceled"}
+                        color={"red"}
+                        value={statisticData.groupByStatus.canceled}
+                      />
+                    </>
+                  )}
                 </div>
               </Col>
               <Col className="gutter-row" span={8}>
-                {' '}
                 <div className="pad15">
-                  <h3 style={{ color: '#22075e', marginBottom: 15 }}>
-                    Quote Preview
+                  <h3 style={{ color: "#22075e", marginBottom: 15 }}>
+                    Order Shipping Method
                   </h3>
-                  <PreviewState tag={'Draft'} color={'grey'} value={3} />
-                  <PreviewState tag={'Pending'} color={'bleu'} value={5} />
-                  <PreviewState tag={'Not Paid'} color={'orange'} value={12} />
-                  <PreviewState tag={'Overdue'} color={'red'} value={6} />
-                  <PreviewState
-                    tag={'Partially Paid'}
-                    color={'cyan'}
-                    value={8}
-                  />
-                  <PreviewState tag={'Paid'} color={'green'} value={55} />
+                  {statisticData.groupByShippingMethod && (
+                    <>
+                      <PreviewState
+                        tag={"Same-day delivery"}
+                        color={"grey"}
+                        value={
+                          statisticData.groupByShippingMethod[
+                            "Same-day delivery"
+                          ]
+                        }
+                      />
+                      <PreviewState
+                        tag={"Overnight delivery"}
+                        color={"bleu"}
+                        value={
+                          statisticData.groupByShippingMethod[
+                            "Overnight delivery"
+                          ]
+                        }
+                      />
+                      <PreviewState
+                        tag={"International delivery"}
+                        color={"orange"}
+                        value={
+                          statisticData.groupByShippingMethod[
+                            "International delivery"
+                          ]
+                        }
+                      />
+                      <PreviewState
+                        tag={"Normal delivery"}
+                        color={"red"}
+                        value={
+                          statisticData.groupByShippingMethod["Normal delivery"]
+                        }
+                      />
+                    </>
+                  )}
                 </div>
               </Col>
               <Col className="gutter-row" span={8}>
-                {' '}
                 <div className="pad15">
-                  <h3 style={{ color: '#22075e', marginBottom: 15 }}>
-                    Order Preview
+                  <h3 style={{ color: "#22075e", marginBottom: 15 }}>
+                    Payment Method
                   </h3>
-                  <PreviewState tag={'Draft'} color={'grey'} value={3} />
-                  <PreviewState tag={'Pending'} color={'bleu'} value={5} />
-                  <PreviewState tag={'Not Paid'} color={'orange'} value={12} />
-                  <PreviewState tag={'Overdue'} color={'red'} value={6} />
-                  <PreviewState
-                    tag={'Partially Paid'}
-                    color={'cyan'}
-                    value={8}
-                  />
-                  <PreviewState tag={'Paid'} color={'green'} value={55} />
+                  {statisticData.groupByPaymentMethod && (
+                    <>
+                      <PreviewState
+                        tag={"In cash"}
+                        color={"grey"}
+                        value={statisticData.groupByPaymentMethod["In cash"]}
+                      />
+                      <PreviewState
+                        tag={"Paypal"}
+                        color={"bleu"}
+                        value={statisticData.groupByPaymentMethod["Paypal"]}
+                      />
+                      <PreviewState
+                        tag={"Momo"}
+                        color={"orange"}
+                        value={statisticData.groupByPaymentMethod["Momo"]}
+                      />
+                      <PreviewState
+                        tag={"Internet Banking"}
+                        color={"red"}
+                        value={
+                          statisticData.groupByPaymentMethod["Internet Banking"]
+                        }
+                      />
+                    </>
+                  )}
                 </div>
               </Col>
             </Row>
@@ -239,52 +305,48 @@ export default function Dashboard() {
         </Col>
 
         <Col className="gutter-row" span={6}>
-          <div className="whiteBox shadow" style={{ height: '380px' }}>
+          <div className="whiteBox shadow" style={{ height: "280px" }}>
             <div
               className="pad20"
-              style={{ textAlign: 'center', justifyContent: 'center' }}
+              style={{ textAlign: "center", justifyContent: "center" }}
             >
-              <h3 style={{ color: '#22075e', marginBottom: 30 }}>
+              <h3 style={{ color: "#22075e", marginBottom: 30 }}>
                 Customer Preview
               </h3>
 
-              <Progress type="dashboard" percent={25} width={148} />
-              <p>New Customer this Month</p>
-              <Divider />
-              <Statistic
-                title="Active Customer"
-                value={11.28}
-                precision={2}
-                valueStyle={{ color: '#3f8600' }}
-                prefix={<ArrowUpOutlined />}
-                suffix="%"
+              <Progress
+                type="dashboard"
+                percent={statisticData.userLastMonth}
+                width={148}
               />
+              <p>New Customer this Month</p>
             </div>
           </div>
         </Col>
       </Row>
+
       <div className="space30"></div>
       <Row gutter={[24, 24]}>
         <Col className="gutter-row" span={12}>
           <div className="whiteBox shadow">
             <div className="pad20">
-              <h3 style={{ color: '#22075e', marginBottom: 5 }}>
+              <h3 style={{ color: "#22075e", marginBottom: 5 }}>
                 Recent Orders
               </h3>
             </div>
 
-            <RecentTable entity={'order'} dataTableColumns={orderColumns} />
+            <RecentTable entity={"order"} dataTableColumns={orderColumns} />
           </div>
         </Col>
 
         <Col className="gutter-row" span={12}>
           <div className="whiteBox shadow">
             <div className="pad20">
-              <h3 style={{ color: '#22075e', marginBottom: 5 }}>
+              <h3 style={{ color: "#22075e", marginBottom: 5 }}>
                 Recent Products
               </h3>
             </div>
-            <RecentTable entity={'book'} dataTableColumns={productColumns} />
+            <RecentTable entity={"book"} dataTableColumns={productColumns} />
           </div>
         </Col>
       </Row>
